@@ -72,3 +72,15 @@ export const storyBySlugQuery = groq`*[_type == "story" && slug.current == $slug
   publishedAt,
   body
 }`;
+
+
+export const relatedStoriesQuery = groq`*[_type == "story" && defined(slug.current) && slug.current != $slug] | order(featured desc, publishedAt desc) [0...2] {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  coverImage,
+  coverAlt,
+  location,
+  publishedAt
+}`;

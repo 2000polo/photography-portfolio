@@ -5,6 +5,7 @@ import {
   featuredStoriesQuery,
   heroSlidesQuery,
   photographsQuery,
+  relatedStoriesQuery,
   storiesQuery,
   storyBySlugQuery,
 } from "@/sanity/lib/queries";
@@ -39,4 +40,10 @@ export async function getStories(): Promise<StoryCardDocument[]> {
 export async function getStoryBySlug(slug: string): Promise<StoryDocument | null> {
   if (!hasSanityConfig) return null;
   return sanityClient.fetch(storyBySlugQuery, { slug }, { next: { revalidate: 60 } });
+}
+
+
+export async function getRelatedStories(slug: string): Promise<StoryCardDocument[]> {
+  if (!hasSanityConfig) return [];
+  return sanityClient.fetch(relatedStoriesQuery, { slug }, { next: { revalidate: 60 } });
 }
