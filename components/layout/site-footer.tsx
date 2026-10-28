@@ -1,5 +1,3 @@
-'use client'
-
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -44,7 +42,7 @@ export function SiteFooter() {
         </div>
         <div className="mt-12 flex flex-col gap-3 border-t border-white/20 pt-5 text-[10px] tracking-wider text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} ARUN PAUL. ALL RIGHTS RESERVED.</span>
-          <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>BACK TO TOP ↑</a>
+          <a href="#top">BACK TO TOP ↑</a>
         </div>
       </div>
     </footer>

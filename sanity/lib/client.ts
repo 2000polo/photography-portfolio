@@ -5,5 +5,6 @@ export const sanityClient = createClient({
   projectId: projectId || "placeholder",
   dataset,
   apiVersion,
-  useCdn: true
+  useCdn: true,
+  perspective: "published",
 });

@@ -4,6 +4,6 @@ import { sanityClient } from "@/sanity/lib/client";
 
 const builder = imageUrlBuilder(sanityClient);
 
-export function urlForImage(source: Image) {
-  return builder.image(source).auto("format").fit("max");
+export function urlForImage(source: Image | unknown) {
+  return builder.image(source as Image).auto("format").fit("max");
 }

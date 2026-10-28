@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
+import Image from "next/image";
+import type { StoryCardDocument } from "@/sanity/lib/types";
+import { urlForImage } from "@/sanity/lib/image";
 
 export function IntroSection() {
   return (
@@ -29,28 +32,7 @@ export function IntroSection() {
   );
 }
 
-export function FeaturedStories() {
-  const stories = [
-    {
-      number: "01",
-      category: "FIELD NOTES",
-      title: "Learning to look closer",
-      description: "Small details, quiet encounters, and the practice of paying attention.",
-      href: "/stories",
-      image: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1300&q=85",
-      alt: "Sunlight filtering through forest trees"
-    },
-    {
-      number: "02",
-      category: "TRAVEL JOURNAL",
-      title: "The long way around",
-      description: "A collection of moments from roads that were never just about the destination.",
-      href: "/stories",
-      image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1300&q=85",
-      alt: "Mountain lake beneath a cloudy sky"
-    }
-  ];
-
+export function FeaturedStories({ stories }: { stories: StoryCardDocument[] }) {
   return (
     <section className="bg-[#eae6dc] px-6 py-24 sm:px-12 sm:py-32 lg:px-20">
       <div className="mx-auto max-w-7xl">
@@ -63,30 +45,34 @@ export function FeaturedStories() {
             <Link href="/stories" className="editorial-link w-fit">All stories <ArrowUpRight size={15} /></Link>
           </div>
         </Reveal>
-        <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
-          {stories.map((story, index) => (
-            <Reveal key={story.number} delay={index * 0.12}>
-              <Link href={story.href} className="group block">
-                <div className="relative aspect-[5/4] overflow-hidden bg-[#d8d4ca]">
-                  {/* Remote images are used as decorative story placeholders. */}
-                  <div
-                    role="img"
-                    aria-label={story.alt}
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.035]"
-                    style={{ backgroundImage: `url("${story.image}")` }}
-                  />
-                  <span className="absolute left-4 top-4 border border-white/60 px-3 py-2 text-[9px] tracking-[.18em] text-white">{story.number}</span>
-                </div>
-                <div className="mt-5 flex items-center justify-between gap-4">
-                  <p className="eyebrow text-[#77786d]">{story.category}</p>
-                  <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                </div>
-                <h3 className="display mt-3 text-4xl sm:text-5xl">{story.title}</h3>
-                <p className="mt-3 max-w-md text-sm leading-6 text-[#65655d]">{story.description}</p>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+        {stories.length ? (
+          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
+            {stories.map((story, index) => (
+              <Reveal key={story._id} delay={index * 0.12}>
+                <Link href={`/stories/${story.slug}`} className="group block">
+                  <div className="relative aspect-[5/4] overflow-hidden bg-[#d8d4ca]">
+                    <Image
+                      src={urlForImage(story.coverImage).width(1300).quality(85).url()}
+                      alt={story.coverAlt || story.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                    />
+                    <span className="absolute left-4 top-4 border border-white/60 px-3 py-2 text-[9px] tracking-[.18em] text-white">{String(index + 1).padStart(2, "0")}</span>
+                  </div>
+                  <div className="mt-5 flex items-center justify-between gap-4">
+                    <p className="eyebrow text-[#77786d]">{story.location || "TRAVEL JOURNAL"}</p>
+                    <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                  </div>
+                  <h3 className="display mt-3 text-4xl sm:text-5xl">{story.title}</h3>
+                  {story.excerpt && <p className="mt-3 max-w-md text-sm leading-6 text-[#65655d]">{story.excerpt}</p>}
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-10 max-w-xl text-sm leading-7 text-[#65655d]">Your travel stories will appear here once you publish them in Sanity Studio and mark them as featured.</p>
+        )}
       </div>
     </section>
   );
