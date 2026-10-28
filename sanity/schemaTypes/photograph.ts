@@ -12,7 +12,7 @@ export const photograph = defineType({
     defineField({ name: "caption", title: "Caption", type: "text", rows: 3 }),
     defineField({ name: "location", title: "Location", type: "string" }),
     defineField({ name: "dateTaken", title: "Date taken", type: "date" }),
-    defineField({ name: "category", title: "Category", type: "string", options: { list: ["Wildlife", "Birds", "Landscapes", "Trekking", "People & Culture"] } }),
+    defineField({ name: "category", title: "Category", type: "string", options: { list: ["Wildlife", "Birds", "Insects", "Landscapes", "Travel", "Trekking", "People & Culture"] } }),
     defineField({ name: "featured", title: "Featured on homepage", type: "boolean", initialValue: false }),
     defineField({ name: "licensingAvailable", title: "Available for licensing", type: "boolean", initialValue: true })
   ],
