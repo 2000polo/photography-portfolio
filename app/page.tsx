@@ -7,7 +7,7 @@ import { urlForImage } from "@/sanity/lib/image";
 export default async function HomePage() {
   const [heroDocuments, stories] = await Promise.all([getHeroSlides(), getFeaturedStories()]);
   const slides = heroDocuments.map((slide) => ({
-    id: slide._id,
+    id: slide.id,
     title: slide.title,
     subtitle: slide.subtitle || "A closer look at the natural world and the journeys that bring us to it.",
     location: slide.location || "Somewhere in the wild",

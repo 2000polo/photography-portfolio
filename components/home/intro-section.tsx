@@ -65,7 +65,7 @@ export function FeaturedStories({ stories }: { stories: StoryCardDocument[] }) {
                     <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                   </div>
                   <h3 className="display mt-3 text-4xl sm:text-5xl">{story.title}</h3>
-                  {story.excerpt && <p className="mt-3 max-w-md text-sm leading-6 text-[#65655d]">{story.excerpt}</p>}
+                  {story.excerpt && <p className="mt-3 text-sm leading-6 text-[#65655d]">{story.excerpt}</p>}
                 </Link>
               </Reveal>
             ))}

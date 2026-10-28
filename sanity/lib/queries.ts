@@ -1,15 +1,17 @@
 import { groq } from "next-sanity";
 
-export const heroSlidesQuery = groq`*[_type == "heroSlide" && published == true] | order(order asc) {
-  _id,
-  title,
-  subtitle,
-  location,
-  category,
-  image,
-  imageAlt,
-  storyHref
-}`;
+export const heroSlidesQuery = groq`*[_type == "homepageSlider"][0] {
+  "slides": slides[] {
+    "id": photograph->_id,
+    "title": photograph->title,
+    "subtitle": coalesce(subtitle, photograph->caption),
+    "location": photograph->location,
+    "category": photograph->category,
+    "image": photograph->image,
+    "imageAlt": photograph->alt,
+    "storyHref": coalesce(storyHref, "/photography")
+  }
+}.slides`;
 
 export const featuredPhotographsQuery = groq`*[_type == "photograph" && featured == true] | order(dateTaken desc) [0...8] {
   _id,
@@ -24,7 +26,7 @@ export const featuredPhotographsQuery = groq`*[_type == "photograph" && featured
   licensingAvailable
 }`;
 
-export const photographsQuery = groq`*[_type == "photograph"] | order(dateTaken desc) {
+export const photographsQuery = groq`*[_type == "photograph" && defined(image.asset)] | order(dateTaken desc) {
   _id,
   title,
   "slug": slug.current,

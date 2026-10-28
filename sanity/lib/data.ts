@@ -12,7 +12,8 @@ import type { HeroSlideDocument, PhotographDocument, StoryCardDocument, StoryDoc
 
 export async function getHeroSlides(): Promise<HeroSlideDocument[]> {
   if (!hasSanityConfig) return [];
-  return sanityClient.fetch(heroSlidesQuery, {}, { next: { revalidate: 60 } });
+  const slides = await sanityClient.fetch<HeroSlideDocument[] | null>(heroSlidesQuery, {}, { next: { revalidate: 60 } });
+  return slides ?? [];
 }
 
 export async function getFeaturedPhotographs(): Promise<PhotographDocument[]> {

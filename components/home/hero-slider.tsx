@@ -144,7 +144,7 @@ export default function HeroSlider({ slides = demoSlides }: { slides?: HeroSlide
               <span className="text-white/45">/</span>
               {activeSlide.location}
             </div>
-            <h1 className="display max-w-5xl text-6xl leading-[.94] sm:text-6xl md:text-7xl">
+            <h1 className="tracking-normal! display max-w-5xl text-6xl leading-[.94] sm:text-6xl md:text-7xl">
               {activeSlide.title}
             </h1>
             <p className="mt-6 max-w-md text-sm leading-6 text-white/75 sm:text-base">

@@ -6,7 +6,7 @@ export type SanityImage = {
 };
 
 export type HeroSlideDocument = {
-  _id: string;
+  id: string;
   title: string;
   subtitle?: string;
   location?: string;

@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { getPhotographs } from "@/sanity/lib/data";
 import { urlForImage } from "@/sanity/lib/image";
-import { Reveal } from "@/components/ui/reveal";
+import { PhotographyGallery } from "@/components/photography/photography-gallery";
 
 export const metadata: Metadata = {
   title: "Photography | Arun Paul",
@@ -13,6 +11,19 @@ export const metadata: Metadata = {
 
 export default async function PhotographyPage() {
   const photographs = await getPhotographs();
+  const galleryPhotos = photographs.map((photo) => ({
+    id: photo._id,
+    title: photo.title,
+    alt: photo.alt || photo.title,
+    caption: photo.caption,
+    location: photo.location,
+    dateTaken: photo.dateTaken,
+    category: photo.category,
+    licensingAvailable: photo.licensingAvailable,
+    // Gallery previews are sized for their display area; the viewer uses a larger source.
+    previewUrl: urlForImage(photo.image).width(1400).quality(90).url(),
+    fullUrl: urlForImage(photo.image).width(2400).quality(95).fit("max").url(),
+  }));
 
   return (
     <main className="min-h-screen bg-[#f4f1e9] px-6 py-12 sm:px-12 sm:py-16 lg:px-20">
@@ -23,29 +34,11 @@ export default async function PhotographyPage() {
         <p className="mt-6 max-w-xl text-sm leading-7 text-[#65655d] sm:text-base">Wildlife encounters, open landscapes, and the details that make a place unforgettable.</p>
       </header>
 
-      {photographs.length ? (
-        <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {photographs.map((photo, index) => (
-            <Reveal key={photo._id} delay={(index % 3) * 0.06}>
-              <article>
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#dedacf]">
-                  <Image src={urlForImage(photo.image).width(1000).quality(85).url()} alt={photo.alt || photo.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-700 hover:scale-[1.025]" />
-                </div>
-                <div className="mt-4 flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="display text-2xl sm:text-3xl">{photo.title}</h2>
-                    <p className="mt-2 text-xs text-[#77786d]">{[photo.location, photo.category, photo.dateTaken].filter(Boolean).join(" · ")}</p>
-                    {photo.caption && <p className="mt-3 max-w-sm text-sm leading-6 text-[#65655d]">{photo.caption}</p>}
-                  </div>
-                  {photo.licensingAvailable && <a href="mailto:hello@arunpaul.photo?subject=Photo%20licensing%20enquiry" aria-label={`Ask about licensing ${photo.title}`} className="mt-1 shrink-0 text-[#77786d] hover:text-black"><ArrowUpRight size={18} /></a>}
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+      {galleryPhotos.length ? (
+        <PhotographyGallery photographs={galleryPhotos} />
       ) : (
         <div className="mx-auto mt-16 max-w-7xl border-t border-black/15 py-8 text-sm leading-7 text-[#65655d]">
-          No photographs have been published yet. Open <Link className="underline underline-offset-4" href="/studio">Sanity Studio</Link>, add a Photograph, and publish it to display it here.
+          No photographs have been published yet. Open <Link className="underline underline-offset-4" href="/studio">Sanity Studio</Link> and add a Photograph. To feature an existing photograph on the homepage, add it to Homepage Slider—there is no need to upload it again.
         </div>
       )}
     </main>
