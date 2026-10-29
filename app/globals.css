@@ -39,3 +39,20 @@ button { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Subtle route feedback: visible immediately, without blocking the page. */
+.navigation-progress {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--moss);
+  box-shadow: 0 0 8px rgba(154, 167, 131, .32);
+  pointer-events: none;
+  transition: width 260ms cubic-bezier(.22, 1, .36, 1), opacity 180ms ease;
+  opacity: 1;
+}
+.navigation-progress--complete {
+  opacity: 0;
+}

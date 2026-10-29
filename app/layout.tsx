@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist } from "next/font/google";
 import "./globals.css";
+import { NavigationProgress } from "@/components/layout/navigation-progress";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"], display: "swap" });
 const cormorant = Cormorant_Garamond({
@@ -18,5 +19,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${geist.variable} ${cormorant.variable}`}>{children}</body></html>;
+  return (
+    <html lang="en">
+      <body className={`${geist.variable} ${cormorant.variable}`}>
+        <NavigationProgress />
+        {children}
+      </body>
+    </html>
+  );
 }
