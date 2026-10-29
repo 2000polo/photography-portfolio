@@ -184,7 +184,7 @@ export default function HeroSlider({ slides = demoSlides }: { slides?: HeroSlide
             const isActive = index === activeIndex;
             return (
               <button
-                key={slide.id}
+                key={`${slide.id ?? slide.title}-${index}`}
                 type="button"
                 onClick={() => goTo(index)}
                 aria-label={`Show photograph ${index + 1}: ${slide.title}`}
