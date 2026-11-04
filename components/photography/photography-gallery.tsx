@@ -44,6 +44,27 @@ export function PhotographyGallery({ photographs }: { photographs: Photograph[] 
     [photographs],
   );
 
+  // Read the category from the URL on entry and keep browser back/forward in sync.
+  useEffect(() => {
+    const syncCategoryFromUrl = () => {
+      const requested = new URLSearchParams(window.location.search).get("category");
+      const match = categories.find((category) => category.toLowerCase() === requested?.toLowerCase());
+      setActiveCategory(match ?? "All");
+    };
+    syncCategoryFromUrl();
+    window.addEventListener("popstate", syncCategoryFromUrl);
+    return () => window.removeEventListener("popstate", syncCategoryFromUrl);
+  }, [categories]);
+
+  const selectCategory = (category: string) => {
+    setActiveCategory(category);
+    setActiveIndex(null);
+    const url = new URL(window.location.href);
+    if (category === "All") url.searchParams.delete("category");
+    else url.searchParams.set("category", category);
+    window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  };
+
   const filteredPhotographs = useMemo(
     () => activeCategory === "All" ? photographs : photographs.filter((photo) => photo.category === activeCategory),
     [activeCategory, photographs],
@@ -95,7 +116,7 @@ export function PhotographyGallery({ photographs }: { photographs: Photograph[] 
                 <button
                   key={category}
                   type="button"
-                  onClick={() => { setActiveCategory(category); setActiveIndex(null); }}
+                  onClick={() => selectCategory(category)}
                   aria-pressed={selected}
                   className={`inline-flex min-h-10 items-center gap-2 border px-4 py-2 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#777d68] ${selected ? "border-[#25261f] bg-[#25261f] text-[#f4f1e9]" : "border-black/15 text-[#65655d] hover:border-black/50 hover:text-black"}`}
                 >
@@ -108,12 +129,12 @@ export function PhotographyGallery({ photographs }: { photographs: Photograph[] 
         </div>
 
         {filteredPhotographs.length ? (
-          <div className="grid grid-cols-1 items-start gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-7 xl:grid-cols-4">
+          <div className="columns-1 gap-x-5 sm:columns-2 lg:columns-3 lg:gap-x-7 xl:columns-4">
             {filteredPhotographs.map((photo, index) => {
               const prominent = index % 7 === 0 || index % 7 === 4;
               const landscape = index % 7 === 2 || index % 7 === 5;
               return (
-                <article key={photo._id} className="min-w-0">
+                <article key={photo._id} className="pb-3 mb-5 min-w-0 break-inside-avoid [page-break-inside:avoid] border-b border-black/15">
                   <button
                     type="button"
                     onClick={() => { setActiveIndex(index); setZoomed(false); }}
@@ -137,11 +158,12 @@ export function PhotographyGallery({ photographs }: { photographs: Photograph[] 
                   <div className="mt-4 flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <h2 className="display text-2xl leading-tight sm:text-3xl">{photo.title}</h2>
-                      <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[#77786d]">{[photo.location, photo.category, formatDate(photo.dateTaken)].filter(Boolean).join(" · ") || "FIELD NOTES"}</p>
-                      {photo.caption && <p className="mt-3 max-w-xl text-sm leading-6 text-[#65655d]">{photo.caption}</p>}
+                      
                     </div>
                     {photo.licensingAvailable && <a href={`mailto:hello@arunpaul.photo?subject=${encodeURIComponent(`Photo licensing enquiry: ${photo.title}`)}`} aria-label={`Ask about licensing ${photo.title}`} className="mt-1 shrink-0 text-sm text-[#77786d] underline decoration-black/20 underline-offset-4 transition-colors hover:text-black">License</a>}
                   </div>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[#77786d]">{[photo.location, photo.category, formatDate(photo.dateTaken)].filter(Boolean).join(" · ") || "FIELD NOTES"}</p>
+                    {photo.caption && <p className="mt-3 max-w-xl text-sm leading-6 text-[#65655d]">{photo.caption}</p>}
                 </article>
               );
             })}

@@ -7,7 +7,7 @@ import { urlForImage } from "@/sanity/lib/image";
 
 export function IntroSection() {
   return (
-    <section id="discover" className="bg-[#f4f1e9] px-6 py-24 sm:px-12 sm:py-36 lg:px-20">
+    <section id="discover" className="bg-[#f4f1e9] px-6 py-20 sm:px-12 sm:py-28 lg:px-20 border-t border-black/15">
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12 md:items-end">
         <Reveal className="md:col-span-7">
           <p className="eyebrow mb-6 text-[#77786d]">A PHOTOGRAPHIC JOURNAL</p>
