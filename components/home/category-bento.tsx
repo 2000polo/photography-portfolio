@@ -118,7 +118,7 @@ export function CategoryBento({ photographs }: { photographs: BentoPhoto[] }) {
         const aOrder = CATEGORY_ORDER.indexOf(a.name);
         const bOrder = CATEGORY_ORDER.indexOf(b.name);
         return (aOrder < 0 ? 999 : aOrder) - (bOrder < 0 ? 999 : bOrder) || a.name.localeCompare(b.name);
-      });
+      }).slice(0, 4);
   }, [photographs]);
 
   if (!categories.length) return null;

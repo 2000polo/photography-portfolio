@@ -106,7 +106,7 @@ export function PhotographyGallery({ photographs }: { photographs: Photograph[] 
 
   return (
     <>
-      <section className="mx-auto mt-12 max-w-7xl" aria-label="Photography collection">
+      <section className="mx-auto my-12 max-w-7xl px-5 sm:px-10 lg:px-20" aria-label="Photography collection">
         <div className="mb-8 flex flex-col gap-5 border-y border-black/15 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter photographs by category">
             {categories.map((category) => {

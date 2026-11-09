@@ -19,7 +19,7 @@ export function AboutSection() {
     <section id="about" className="overflow-hidden bg-[#191a16] px-6 py-24 text-[#f4f1e9] sm:px-12 sm:py-32 lg:px-20">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <div className="grid gap-12 border-t border-white/20 pt-6 md:grid-cols-12 md:gap-8">
+          <div className="grid gap-12 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-7">
               <p className="eyebrow text-[#b5b9a4]">A LITTLE ABOUT THE OBSERVER</p>
               <h2 className="display mt-8 max-w-4xl text-6xl leading-[.94] sm:text-7xl lg:text-[6.5rem]">

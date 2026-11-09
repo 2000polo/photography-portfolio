@@ -4,6 +4,7 @@ import { getPhotographs } from "@/sanity/lib/data";
 import { urlForImage } from "@/sanity/lib/image";
 import { Reveal } from "@/components/ui/reveal";
 import { PhotographyGallery } from "@/components/photography/photography-gallery";
+import { CreativeServicesNote } from "@/components/home/creative-services-note";
 
 export const metadata: Metadata = {
   title: "Photography | Arun Paul",
@@ -26,10 +27,10 @@ export default async function PhotographyPage() {
   }));
 
   return (
-    <main className="min-h-screen bg-[#f4f1e9] px-5 py-10 sm:px-10 sm:py-14 lg:px-20 lg:py-16">
-      <header className="mx-auto max-w-7xl">
+    <main className="min-h-screen bg-[#f4f1e9] pt-10 sm:pt-14 lg:pt-16">
+      <header className="mx-auto max-w-7xl px-5 sm:px-10 lg:px-20">
         <Link href="/" className="eyebrow text-[#77786d] transition-opacity hover:opacity-60">← ARUN PAUL / HOME</Link>
-        <div className="mt-16 grid gap-8 border-b border-black/15 pb-10 sm:mt-20 sm:grid-cols-12 sm:items-end sm:pb-12">
+        <div className="mt-16 grid gap-8 sm:mt-20 sm:grid-cols-12 sm:items-end">
           <div className="sm:col-span-8">
             <p className="eyebrow text-[#77786d]">THE VISUAL ARCHIVE · {String(photographs.length).padStart(2, "0")} FRAMES</p>
             <h1 className="display mt-4 text-6xl leading-[.92] sm:text-8xl lg:text-9xl">Photography<span className="italic text-[#777d68]">.</span></h1>
@@ -46,9 +47,9 @@ export default async function PhotographyPage() {
           <p className="mt-3">Open <Link className="underline underline-offset-4" href="/studio">Sanity Studio</Link>, add a Photograph, and publish it to display it here.</p>
         </div>
       )}
-
-      <Reveal>
-        <footer className="mx-auto mt-20 flex max-w-7xl flex-col gap-4 border-t border-black/15 pt-6 text-xs text-[#77786d] sm:flex-row sm:items-center sm:justify-between">
+      <CreativeServicesNote />
+      <Reveal className="bg-[#171815]">
+        <footer className="mx-auto flex max-w-7xl justify-between gap-4 border-t border-black/15 py-6 text-xs text-[#77786d] sm:flex-row sm:items-center sm:justify-between">
           <p className="eyebrow">OBSERVED, NOT ARRANGED</p>
           <Link href="/stories" className="eyebrow transition-colors hover:text-black">READ THE FIELD JOURNAL ↗</Link>
         </footer>

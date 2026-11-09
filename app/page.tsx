@@ -6,6 +6,7 @@ import { AboutSection } from "@/components/home/about-section";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { getFeaturedPhotographs, getFeaturedStories, getHeroSlides, getPhotographs } from "@/sanity/lib/data";
 import { urlForImage } from "@/sanity/lib/image";
+import { CreativeServicesNote } from "@/components/home/creative-services-note";
 
 export default async function HomePage() {
   const [heroDocuments, stories, photographs, allPhotographs] = await Promise.all([
@@ -39,7 +40,7 @@ export default async function HomePage() {
       <IntroSection />
       <AboutSection />
       <section className="bg-[#f4f1e9] px-6 py-24 sm:px-12 lg:px-20">
-        <div className="mx-auto grid max-w-7xl gap-8 border-t border-black/15 pt-8 md:grid-cols-12">
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-12">
           <p className="eyebrow text-[#77786d] md:col-span-3">SELECTED WORK</p>
           <div className="md:col-span-9">
             <h2 className="display max-w-4xl text-5xl leading-tight sm:text-6xl">
@@ -69,6 +70,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+      <CreativeServicesNote />
       <SiteFooter />
     </main>
   );
